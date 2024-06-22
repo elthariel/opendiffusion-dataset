@@ -1,6 +1,7 @@
 x-snippets:
   rails-default-env: &rails-default-env
     RAILS_ENV: development
+    REDIS_URL: redis://valkey:6379
   rails-svc: &rails-svc
     build:
       context: .
@@ -43,13 +44,12 @@ services:
     ports:
       - 3000:3000
 
-  # dataset-jobs:
-  #   <<: *rails-svc
-  #   environment:
-  #     <<: *rails-default-env
-  #   stop_grace_period: 2s
-  #   command: >
-  #     sh -c 'bundle && rm -f tmp/pids/server.pid && bundle exec sidekiq'
+  dataset-jobs:
+    <<: *rails-svc
+    environment:
+      <<: *rails-default-env
+    stop_grace_period: 2s
+    command: sh -c 'bundle && bundle exec sidekiq'
 
 volumes:
   pg-data:

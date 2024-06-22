@@ -6,16 +6,22 @@
   <% content_for :title, "Images" %>
 
   <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Images</h1>
-    <%= link_to "New image", new_image_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+    <h1 class="font-bold text-4xl"><%= @collection.name %> images</h1>
+    <%= link_to "New image", new_collection_image_path(@collection),
+                class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
 
-  <div id="images" class="min-w-full">
+  <div id="images" class="min-w-full grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 mt-4">
     <% @images.each do |image| %>
-      <%= render image %>
-      <p>
-        <%= link_to "Show this image", image, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-      </p>
+      <div id="<%= dom_id image %>" class="rounded hover:shadow">
+        <a href="<%= image_path(image) %>">
+          <img src="<%= image.url %>" class="rounded">
+        </a>
+      </div>
+
+      <!-- <p>
+           <%= link_to "Show this image", image, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+           </p> -->
     <% end %>
   </div>
 </div>

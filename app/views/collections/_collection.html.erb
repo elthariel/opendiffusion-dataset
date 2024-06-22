@@ -1,16 +1,22 @@
-<div id="<%= dom_id collection %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Name:</strong>
-    <%= collection.name %>
-  </p>
+<div id="<%= dom_id collection %>" class="border p-4 m-2 border-gray-200 flex flex-col rounded"
+>
+  <div class="flex justify-between mb-4 items-center">
+    <a href="<%= collection_path(collection) %>">
+      <span class="font-xl font-medium">
+        <%= collection.name %>
+      </span>
+    </a>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Url:</strong>
-    <%= collection.url %>
-  </p>
+    <% if collection.url.present? %>
+      <a href="<%= collection.url %>" class="bg-blue-50 border rounded px-3 py-1 hover:shadow">
+        <span class="text-sm">
+          Source
+        </span>
+      </a>
+    <% end %>
+  </div>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Description:</strong>
+  <p class="text-sm text-gray-800">
     <%= collection.description %>
   </p>
 

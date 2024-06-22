@@ -10,12 +10,9 @@
     <%= link_to "New collection", new_collection_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
 
-  <div id="collections" class="min-w-full">
+  <div id="collections" class="min-w-full flex flex-col">
     <% @collections.each do |collection| %>
       <%= render collection %>
-      <p>
-        <%= link_to "Show this collection", collection, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-      </p>
     <% end %>
   </div>
 </div>

@@ -13,15 +13,25 @@
 # Indexes
 #
 #  index_images_on_collection_id  (collection_id)
+#  uniq_rails_0b1e038289          (url) UNIQUE
 #
 class Image < ApplicationRecord
   belongs_to :collection
 
   enum http_status: {
       unknown: 0,
-      found: 1,
-      not_found: 404,
+      **Rack::Utils::SYMBOL_TO_STATUS_CODE
     }, _prefix: true
 
   validates :url, url: { no_local: true }
+
+  after_save :ping
+
+  scope :latest, -> { order(created_at: :desc) }
+
+  protected
+
+  def ping
+    ImagePingerJob.perform_async id if url_previously_changed?
+  end
 end

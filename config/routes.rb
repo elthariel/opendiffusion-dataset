@@ -1,5 +1,15 @@
+# frozen_string_literal: true
+
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  mount Sidekiq::Web => "/sidekiq"
+
+  resources :collections, except: %i[destroy] do
+    resources :images, shallow: true
+  end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
@@ -7,8 +17,4 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#index"
-
-  resources :collections do
-    resources :images, shallow: true
-  end
 end

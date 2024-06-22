@@ -13,11 +13,12 @@
 # Indexes
 #
 #  index_images_on_collection_id  (collection_id)
+#  uniq_rails_0b1e038289          (url) UNIQUE
 #
 Fabricator(:image_base, class_name: 'Image') do
   url { FFaker::Image.url }
 end
 
-Fabricator(:image) do
+Fabricator(:image, from: :image_base) do
   collection
 end

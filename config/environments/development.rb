@@ -73,4 +73,6 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  config.web_console.permissions = '172.0.0.0/8'
 end

@@ -37,6 +37,9 @@ gem 'kaminari', '~> 1.2'
 # Background job processing
 gem 'sidekiq', '~> 7.2'
 
+# HTTP client
+gem 'faraday', '~> 2.9'
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
