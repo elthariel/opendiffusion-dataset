@@ -1,24 +1,28 @@
-# README
+# φ Dataset
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+> This is presently not much more than an experiment
 
-Things you may want to cover:
+OpenDiffusion Dataset (better name pending) is a tool to help the OpenDiffusion
+community build datasets to train a fancy new diffusion model.
 
-* Ruby version
+The following features are planned:
 
-* System dependencies
+- [x] Creating collections
+- [x] Attaching image URLs to collections
+  - [x] Verify the URLs are valid and exists
+  - [x] Manual creation
+  - [] CSV Import
+  - [] Parquet import
+- [-] Attaching ratings to those images
+- [-] Attaching captions to those images
+- [-] Multiple captions/ratings car be attached to an image to support multiple
+  models/approach
+- [] Job Runner API
+  - Fetch bundles of images with ratings/captions missing for processing on a
+    local GPU.
+  - Submit ratings/captions bundles back.
+- [] Allow humans to create/review/edit captions and ratings
+  - [] Implement a karma system to build trust in users
 
-* Configuration
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+[Boiler plate here]
