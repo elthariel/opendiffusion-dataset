@@ -1,0 +1,26 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch('RAILS_MAX_THREADS') { 5 } %>
+
+dkc-default: &dkc-default
+  host: <%= ENV.fetch('POSTGRES_HOST', 'pg') %>
+  user: <%= ENV.fetch('POSTGRES_USER', 'opendiffusion') %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD', 'ignored') %>
+  port: <%= ENV.fetch('POSTGRES_PORT', '5432') %>
+
+development:
+  <<: [*default, *dkc-default]
+  database: dataset_development
+
+test:
+  <<: [*default, *dkc-default]
+  database: dataset_test
+
+production:
+  <<: *default
+  database: fixme
+  username: fixme
+  password: <%= ENV["DATASET_DATABASE_PASSWORD"] %>

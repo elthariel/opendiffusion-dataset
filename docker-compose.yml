@@ -1,0 +1,55 @@
+x-snippets:
+  rails-default-env: &rails-default-env
+    RAILS_ENV: development
+  rails-svc: &rails-svc
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      args:
+        RUBY_VERSION: 3.3.0
+        DOCKER_USER_UID: ${USER_UID:-1000}
+    volumes:
+      - .:/app
+
+services:
+  #
+  # PostgreSQL
+  #
+  pg:
+    image: 'postgres:16-alpine'
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: opendiffusion
+      POSTGRES_HOST_AUTH_METHOD: trust
+
+  #
+  # Open source redis fork
+  #
+  valkey:
+    image: 'valkey/valkey:7.2-alpine'
+
+  #
+  # The app
+  #
+  dataset:
+    <<: *rails-svc
+    environment:
+      <<: *rails-default-env
+    stop_grace_period: 2s
+    command: >
+      sh -c 'bundle && rm -f tmp/pids/server.pid && bundle exec rails server -b
+      0.0.0.0'
+    ports:
+      - 3000:3000
+
+  # dataset-jobs:
+  #   <<: *rails-svc
+  #   environment:
+  #     <<: *rails-default-env
+  #   stop_grace_period: 2s
+  #   command: >
+  #     sh -c 'bundle && rm -f tmp/pids/server.pid && bundle exec sidekiq'
+
+volumes:
+  pg-data:
